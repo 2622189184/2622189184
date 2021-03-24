@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <title>Read</title>
+    </head>
+    <body>
+        <?php
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $database = "group23";
+
+
+            $connection  = new mysqli($servername, $username, $password, $database);
+            if ($connection->connect_error){
+                die("Connection Failed: " .$connection->connect_error);
+            }
+            else{
+
+                $sql = "SELECT * FROM info";
+                $result = $connection->query($sql);
+
+                if ($result->num_rows > 0){
+                    print "<table>
+                                <tr>
+                                    <td><b>ID</b></td>
+                                    <td><b>Product</b></td>
+                                    <td><b>Description</b></td>
+                                    <td><b>Modify</b></td>
+                                </tr>";
+                    while($row = $result->fetch_assoc()){
+                        print "<tr>
+                                    <td>".$row['id']."</td>
+                                    <td>".$row['name']."</td>
+                                    <td>".$row['description']."</td>
+                                    <td><a href='update.php?id=".$row['id']."'>Update</a></td>
+                                </tr>";
+                    }
+                    print "</table>";
+
+                }
+
+            }
+        ?>
+    </body>
+</html>
